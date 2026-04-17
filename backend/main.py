@@ -31,6 +31,8 @@ from routers import auth, advisory, pest, recommendations, market
 
 # ── Import farm_advisory (now unified in backend) ────────────────────────
 from farm_advisory import router as farm_advisory_router
+from fastapi.middleware.cors import CORSMiddleware
+
 
 
 @asynccontextmanager
@@ -52,13 +54,19 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # for now allow all
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # ── CORS ──────────────────────────────────────────────────────────────────
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://smart-agri-jmduj539e-maanasa337s-projects.vercel.app/login")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL, "http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=[FRONTEND_URL, "https://smart-agri-jmduj539e-maanasa337s-projects.vercel.app/login", "http://127.0.0.1:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
