@@ -54,19 +54,17 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # for now allow all
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
 # ── CORS ──────────────────────────────────────────────────────────────────
-FRONTEND_URL = os.getenv("FRONTEND_URL", "https://smart-agri-jmduj539e-maanasa337s-projects.vercel.app/login")
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://smart-agri-git-main-maanasa337s-projects.vercel.app",
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL, "https://smart-agri-jmduj539e-maanasa337s-projects.vercel.app/login", "http://127.0.0.1:3000"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
